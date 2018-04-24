@@ -1,0 +1,31 @@
+#Internal package file, do not edit.
+#Wed Apr 25 07:22:36 AEST 2018
+2.base=/home/undef/go/src/hashtree-mobile/android/app/build/intermediates/transforms/dexMerger/debug/12
+5.set=NATIVE_RESOURCE
+0.path=lib/x86/libgojni.so
+2.baseType=DIRECTORY
+3.base=/home/undef/go/src/hashtree-mobile/android/app/build/intermediates/transforms/stripDebugSymbol/debug/0
+2.set=DEX
+1.path=lib/armeabi-v7a/libgojni.so
+4.base=/home/undef/go/src/hashtree-mobile/android/app/build/intermediates/transforms/dexMerger/debug/13
+count=7
+5.baseType=DIRECTORY
+2.path=classes.dex
+5.base=/home/undef/go/src/hashtree-mobile/android/app/build/intermediates/transforms/stripDebugSymbol/debug/0
+4.set=DEX
+3.path=lib/x86_64/libgojni.so
+6.base=/home/undef/go/src/hashtree-mobile/android/app/build/intermediates/transforms/dexMerger/debug/11
+3.baseType=DIRECTORY
+1.set=NATIVE_RESOURCE
+4.path=classes.dex
+6.set=DEX
+1.baseType=DIRECTORY
+6.baseType=DIRECTORY
+5.path=lib/arm64-v8a/libgojni.so
+0.base=/home/undef/go/src/hashtree-mobile/android/app/build/intermediates/transforms/stripDebugSymbol/debug/0
+0.baseType=DIRECTORY
+3.set=NATIVE_RESOURCE
+6.path=classes.dex
+1.base=/home/undef/go/src/hashtree-mobile/android/app/build/intermediates/transforms/stripDebugSymbol/debug/0
+4.baseType=DIRECTORY
+0.set=NATIVE_RESOURCE

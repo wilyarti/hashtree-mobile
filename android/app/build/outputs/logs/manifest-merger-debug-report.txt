@@ -1,0 +1,72 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:5:1-22:12
+INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:5:1-22:12
+INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:5:1-22:12
+INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:5:1-22:12
+MERGED from [com.android.support:appcompat-v7:22.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/appcompat-v7-22.1.1.aar/a91aa4605badbd2e67fd979bdd41c01c/AndroidManifest.xml:17:1-24:12
+MERGED from [:hello] /home/undef/.gradle/caches/transforms-1/files-1.1/hello.aar/2d929cf37f76a90def20da729105197c/AndroidManifest.xml:1:1-2:50
+MERGED from [com.android.support:support-v4:22.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-v4-22.1.1.aar/1190d692dce430bbfeb26bc09fe9bc66/AndroidManifest.xml:17:1-24:12
+INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:5:1-22:12
+INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:5:1-22:12
+INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:5:1-22:12
+	package
+		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:6:5-38
+		INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml
+		INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml
+		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:5:1-22:12
+		INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml
+		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:5:1-22:12
+		INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:5:11-69
+application
+ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:8:5-20:19
+MERGED from [com.android.support:appcompat-v7:22.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/appcompat-v7-22.1.1.aar/a91aa4605badbd2e67fd979bdd41c01c/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:appcompat-v7:22.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/appcompat-v7-22.1.1.aar/a91aa4605badbd2e67fd979bdd41c01c/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:22.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-v4-22.1.1.aar/1190d692dce430bbfeb26bc09fe9bc66/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:22.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-v4-22.1.1.aar/1190d692dce430bbfeb26bc09fe9bc66/AndroidManifest.xml:22:5-20
+	android:label
+		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:10:9-38
+	android:allowBackup
+		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:9:9-35
+activity#org.golang.example.bind.MainActivity
+ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:11:9-19:20
+	android:label
+		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:13:13-42
+	android:name
+		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:12:13-41
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:14:13-18:29
+action#android.intent.action.MAIN
+ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:15:17-69
+	android:name
+		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:15:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:17:17-77
+	android:name
+		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:17:27-74
+uses-sdk
+INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml
+INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml
+MERGED from [com.android.support:appcompat-v7:22.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/appcompat-v7-22.1.1.aar/a91aa4605badbd2e67fd979bdd41c01c/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:appcompat-v7:22.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/appcompat-v7-22.1.1.aar/a91aa4605badbd2e67fd979bdd41c01c/AndroidManifest.xml:20:5-43
+MERGED from [:hello] /home/undef/.gradle/caches/transforms-1/files-1.1/hello.aar/2d929cf37f76a90def20da729105197c/AndroidManifest.xml:2:1-39
+MERGED from [:hello] /home/undef/.gradle/caches/transforms-1/files-1.1/hello.aar/2d929cf37f76a90def20da729105197c/AndroidManifest.xml:2:1-39
+MERGED from [com.android.support:support-v4:22.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-v4-22.1.1.aar/1190d692dce430bbfeb26bc09fe9bc66/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:22.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-v4-22.1.1.aar/1190d692dce430bbfeb26bc09fe9bc66/AndroidManifest.xml:20:5-43
+INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml
+INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml
+		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml
+		INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml
+		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml
+		INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml
