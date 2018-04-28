@@ -25,12 +25,18 @@ import (
 	"golang.org/x/crypto/argon2"
 )
 
-type EventBus interface {
-	SendEvent(channel, message string)
+// callback
+var jc JavaCallback
+
+type JavaCallback interface {
+	SendString(string)
 }
 
-func test(bus EventBus) {
-	bus.SendEvent("general", "After 3 seconds!")
+func RegisterJavaCallback(c JavaCallback) {
+	jc = c
+}
+func TestCall() {
+	jc.SendString("foo")
 }
 
 // Hashlist returns list of snapshots
@@ -41,7 +47,7 @@ func Hashlist(url string, secure bool, accesskey string, secretkey string, bucke
 	// determined based on the Endpoint value.
 	s3Client, err := minio.New(url, accesskey, secretkey, secure)
 	if err != nil {
-		fmt.Println(err)
+		jc.SendString(fmt.Sprint(err))
 		return "ERROR"
 	}
 	// Create a done channel to control 'ListObjects' go routine.
@@ -54,7 +60,7 @@ func Hashlist(url string, secure bool, accesskey string, secretkey string, bucke
 	var snapshots []string
 	for object := range s3Client.ListObjects(bucket, "", secure, doneCh) {
 		if object.Err != nil {
-			fmt.Println(object.Err)
+			jc.SendString(fmt.Sprint(object.Err))
 			return "ERROR"
 		}
 		matched, err := regexp.MatchString(".hsh$", object.Key)
@@ -158,12 +164,12 @@ func downloadfile(bucket string, url string, secure bool, accesskey string, secr
 	for j := range jobs {
 		// hash is reversed: filepath => hash
 		for hash, fpath := range j {
-			fmt.Println("Downloading remote file: ", hash, "to: ", fpath)
+			jc.SendString(fmt.Sprint("Downloading remote file: ", hash, "to: ", fpath))
 			if _, err := os.Stat(fpath); err == nil {
 				data, err := ioutil.ReadFile(fpath)
 				if err != nil {
 					out := fmt.Sprintf("[!] %s => %s failed to verify: %s", hash, fpath, err)
-					fmt.Println(out)
+					jc.SendString(out)
 					results <- hash
 					break
 				}
@@ -173,12 +179,12 @@ func downloadfile(bucket string, url string, secure bool, accesskey string, secr
 				if hash == checksum {
 					b := path.Base(fpath)
 					out := fmt.Sprintf("[V]   %s => %s", hash[:8], b)
-					fmt.Println(out)
+					jc.SendString(out)
 					results <- ""
 					break
 				} else if (hash != checksum) && (nuke == false) {
 					out := fmt.Sprintf("[!] %s => %s local file differs from remote version!", hash, fpath)
-					fmt.Println(out)
+					jc.SendString(out)
 					results <- hash
 					break
 
@@ -188,7 +194,7 @@ func downloadfile(bucket string, url string, secure bool, accesskey string, secr
 			// break unrecoverable errors
 			if err != nil {
 				out := fmt.Sprintf("[!] %s => %s failed to download: %s", hash, fpath, err)
-				fmt.Println(out)
+				jc.SendString(out)
 				results <- hash
 				break
 			}
@@ -208,7 +214,7 @@ func downloadfile(bucket string, url string, secure bool, accesskey string, secr
 				if err != nil {
 					if i == 3 {
 						out := fmt.Sprintf("[!] %s => %s failed to download: %s", hash, fpath, err)
-						fmt.Println(out)
+						jc.SendString(out)
 						results <- hash
 						break
 					}
@@ -217,7 +223,7 @@ func downloadfile(bucket string, url string, secure bool, accesskey string, secr
 				objSt, err := obj.Stat()
 				if err != nil {
 					out := fmt.Sprintf("[!] %s => %s failed to download: %s", hash, fpath, err)
-					fmt.Println(out)
+					jc.SendString(out)
 					results <- hash
 					break
 				}
@@ -225,14 +231,14 @@ func downloadfile(bucket string, url string, secure bool, accesskey string, secr
 				size, err := decryptedSize(objSt.Size)
 				if err != nil {
 					out := fmt.Sprintf("[!] %s => %s failed to download: %s", hash, fpath, err)
-					fmt.Println(out)
+					jc.SendString(out)
 					results <- hash
 					break
 				}
 				localFile, err := os.Create(fpath)
 				if err != nil {
 					out := fmt.Sprintf("[!] %s => %s Error creating file.", hash, fpath)
-					fmt.Println(out)
+					jc.SendString(out)
 					results <- hash
 					break
 				}
@@ -246,14 +252,14 @@ func downloadfile(bucket string, url string, secure bool, accesskey string, secr
 				})
 				if err != nil {
 					out := fmt.Sprintf("[!] %s => %s failed to download: %s", hash, fpath, err)
-					fmt.Println(out)
+					jc.SendString(out)
 					results <- hash
 					break
 				}
 				dsize, err := io.CopyN(localFile, decrypted, size)
 				if err != nil {
 					out := fmt.Sprintf("[!] %s => %s failed to download: %s", hash, fpath, err)
-					fmt.Println(out)
+					jc.SendString(out)
 					results <- hash
 					break
 				}
@@ -263,7 +269,7 @@ func downloadfile(bucket string, url string, secure bool, accesskey string, secr
 					data, err := ioutil.ReadFile(fpath)
 					if err != nil {
 						out := fmt.Sprintf("[!] %s => %s failed to download: %s", hash, fpath, err)
-						fmt.Println(out)
+						jc.SendString(out)
 						results <- hash
 						break
 					}
@@ -272,19 +278,19 @@ func downloadfile(bucket string, url string, secure bool, accesskey string, secr
 					checksum := hex.EncodeToString(digest[:])
 					if hash != checksum {
 						out := fmt.Sprintf("[!] %s => %s checksum mismatch!", hash, fpath)
-						fmt.Println(out)
+						jc.SendString(out)
 						results <- hash
 						break
 
 					}
 					out := fmt.Sprintf("(%s)(%s) %s => %s\n", elapsed, s, hash[:8], b)
-					fmt.Println(out)
+					jc.SendString(out)
 					results <- ""
 					break
 
 				} else {
 					out := fmt.Sprintf("(%s)(%s) %s => %s\n", elapsed, s, hash, b)
-					fmt.Println(out)
+					jc.SendString(out)
 					results <- ""
 					break
 				}
@@ -304,15 +310,15 @@ func Hashlist(bucketname string, configName string, consolebufptr *[]byte, snaps
 	var config Config
 	// load config to get ready to upload
 	if _, err := toml.DecodeFile(configName, &config); err != nil {
-		fmt.Println(err)
+		jc.SendString(err)
 		*consolebufptr = []byte(fmt.Sprintln("Error reading config: ", err))
 		*lock = false
 		return snapshotlist, err
 	}
-	fmt.Println(config)
+	jc.SendString(config)
 	config, err := Readconfig(configName)
 	if err != nil {
-		fmt.Println(err)
+		jc.SendString(err)
 		*consolebufptr = []byte(fmt.Sprintln("Error processing config: ", err))
 		*lock = false
 		return snapshotlist, err
@@ -321,7 +327,7 @@ func Hashlist(bucketname string, configName string, consolebufptr *[]byte, snaps
 	// determined based on the Endpoint value.
 	s3Client, err := minio.New(config.Url, config.Accesskey, config.Secretkey, config.Secure)
 	if err != nil {
-		fmt.Println(err)
+		jc.SendString(err)
 		*consolebufptr = []byte(fmt.Sprintln("Error creating S3 client: ", err))
 		*lock = false
 		return snapshotlist, err
@@ -336,14 +342,14 @@ func Hashlist(bucketname string, configName string, consolebufptr *[]byte, snaps
 	var snapshots []string
 	for object := range s3Client.ListObjects(bucketname, "", config.Secure, doneCh) {
 		if object.Err != nil {
-			fmt.Println(err)
+			jc.SendString(err)
 			*consolebufptr = []byte(fmt.Sprintln(object.Err))
 			*lock = false
 			return snapshotlist, err
 		}
 		matched, err := regexp.MatchString(".hsh$", object.Key)
 		if err != nil {
-			fmt.Println(err)
+			jc.SendString(err)
 			*consolebufptr = []byte(fmt.Sprintln(err))
 			*lock = false
 			return snapshotlist, err
@@ -395,11 +401,11 @@ func Hashseed(bucketname string, databasename string, configName string, dir str
 	downloadlist[strings.Join(dbnameLocal, "")] = databasename
 
 	// download and check error
-	fmt.Println(dbnameLocal)
+	jc.SendString(dbnameLocal)
 	var remotedb = make(map[string][]string)
 	_, err = downloadfiles.Download(config.Url, config.Port, config.Secure, config.Accesskey, config.Secretkey, config.Enckey, downloadlist, bucketname, consolebufptr, curptr, msgbuf, nuke)
 	if err != nil {
-		fmt.Println("Error unable to download database:", err)
+		jc.SendString("Error unable to download database:", err)
 		*consolebufptr = []byte(fmt.Sprintln("Error unable to download database!", err))
 	} else {
 		remotedb, err = readdb.Load(strings.Join(dbnameLocal, ""))
@@ -425,7 +431,7 @@ func Hashseed(bucketname string, databasename string, configName string, dir str
 	failedDownloads, err := downloadfiles.Download(config.Url, config.Port, config.Secure, config.Accesskey, config.Secretkey, config.Enckey, dlist, bucketname, consolebufptr, curptr, msgbuf, nuke)
 	if err != nil {
 		for _, file := range failedDownloads {
-			fmt.Println("Error failed to download: ", file)
+			jc.SendString("Error failed to download: ", file)
 			*consolebufptr = []byte(fmt.Sprintln(err))
 		}
 	}
@@ -464,7 +470,7 @@ func Hashtree(server string, accesskey string, secretkey string, enckey string, 
 
 	// scan files and return map filepath = hash
 	files = hashfiles.Scan(dir)
-	fmt.Println("Files scanned: ", len(dir))
+	jc.SendString(fmt.Sprint("Files scanned: ", len(dir)))
 
 	// download .db from server this contains the hashed
 	// of all already uploaded files
@@ -484,17 +490,17 @@ func Hashtree(server string, accesskey string, secretkey string, enckey string, 
 	failedDownloads, err := downloadfiles.Download(server, 443, secure, accesskey, secretkey, enckey, downloadlist, bucketname, true)
 	if err != nil {
 		for _, file := range failedDownloads {
-			fmt.Println(err)
-			fmt.Println("Error failed to download: ", file)
+			jc.SendString(fmt.Sprint(err))
+			jc.SendString(fmt.Sprint("Error failed to download: ", file))
 		}
-		fmt.Println(err)
-		fmt.Println("Error: Unable to download database. Hash the database been initialised?")
+		jc.SendString(fmt.Sprint(err))
+		jc.SendString("Error: Unable to download database. Hash the database been initialised?")
 		return false
 	}
 	// read database
 	remotedb, err = readdb.Load(strings.Join(dbnameLocal, ""))
 	if err != nil {
-		fmt.Println("Unable to read database!", err)
+		jc.SendString(fmt.Sprint("Unable to read database!", err))
 		return false
 	}
 
@@ -537,7 +543,7 @@ func Hashtree(server string, accesskey string, secretkey string, enckey string, 
 		}
 
 	}
-	fmt.Println("Verified files: ", c)
+	jc.SendString(fmt.Sprint("Verified files: ", c))
 	// write database to file
 	// before writing remove directory prefix
 	// so the files in the directory become the root of the data structure
@@ -575,15 +581,15 @@ func Hashtree(server string, accesskey string, secretkey string, enckey string, 
 	if err != nil {
 		for _, hash := range failedUploads {
 			// remove failed uploads from database
-			fmt.Println("Failed to upload: ", hash)
+			jc.SendString(fmt.Sprint("Failed to upload: ", hash))
 
 			delete(remotedb, hash)
 			delete(hashmapcooked, hash)
 
 		}
-		fmt.Println(err)
+		jc.SendString(fmt.Sprint(err))
 	}
-	fmt.Println("Successfully uploaded ", (len(uploadlist) - len(failedUploads)), " files. ", len(failedUploads), " failed.")
+	jc.SendString(fmt.Sprint("Successfully uploaded ", (len(uploadlist) - len(failedUploads)), " files. ", len(failedUploads), " failed."))
 	// create database and upload
 	t := time.Now()
 	// create a snapshot of the database
@@ -603,14 +609,14 @@ func Hashtree(server string, accesskey string, secretkey string, enckey string, 
 	// write localdb to hard drive
 	err = writedb.Dump(strings.Join(hashdb, ""), hashmapcooked)
 	if err != nil {
-		fmt.Println("Error writing to database!", err)
+		jc.SendString(fmt.Sprint("Error writing to database!", err))
 		return false
 	}
 
 	// write remotedb to file
 	err = writedb.Dump(strings.Join(dbnameLocal, ""), remotedb)
 	if err != nil {
-		fmt.Println("Error writing to database!", err)
+		jc.SendString(fmt.Sprint("Error writing to database!", err))
 		return false
 	}
 
@@ -622,13 +628,13 @@ func Hashtree(server string, accesskey string, secretkey string, enckey string, 
 	failedUploads, err = uploadfiles.Upload(server, 443, secure, accesskey, secretkey, enckey, dbuploadlist, bucketname)
 	if err != nil {
 		for _, hash := range failedUploads {
-			fmt.Println("Failed to upload: ", hash)
+			jc.SendString(fmt.Sprint("Failed to upload: ", hash))
 		}
-		fmt.Println(err)
+		jc.SendString(fmt.Sprint(err))
 		err = os.Remove(strings.Join(hashdb, ""))
 		err = os.Remove(strings.Join(dbnameLocal, ""))
 		if err != nil {
-			fmt.Println("Error deleting database!", err)
+			jc.SendString(fmt.Sprint("Error deleting database!", err))
 		}
 		return false
 	}
@@ -636,7 +642,7 @@ func Hashtree(server string, accesskey string, secretkey string, enckey string, 
 	err = os.Remove(strings.Join(hashdb, ""))
 	err = os.Remove(strings.Join(dbnameLocal, ""))
 	if err != nil {
-		fmt.Println("Error deleting database!", err)
+		jc.SendString(fmt.Sprint("Error deleting database!", err))
 		return false
 	}
 	return true
@@ -674,9 +680,9 @@ func initRepo() error {
 	}
 
 	if found {
-		fmt.Println("Bucket exists.")
+		jc.SendString("Bucket exists.")
 	} else {
-		fmt.Println("Creating bucket.")
+		jc.SendString("Creating bucket.")
 		err = s3Client.MakeBucket(bucketname, "us-east-1")
 		if err != nil {
 			log.Fatalln(err)
@@ -708,14 +714,14 @@ func initRepo() error {
 	err, failedUploads := uploadFiles.Upload(config.Url, config.Port, config.Secure, config.Accesskey, config.Secretkey, config.Enckey, dbuploadlist, bucketname)
 	if err != nil {
 		for _, hash := range failedUploads {
-			fmt.Println("Failed to upload: ", hash)
+			jc.SendString("Failed to upload: ", hash)
 		}
 		return err
 	}
 
 	err = os.Remove(strings.Join(dbnameLocal, ""))
 	if err != nil {
-		fmt.Println("Error deleting database!", err)
+		jc.SendString("Error deleting database!", err)
 	}
 	return nil
 
