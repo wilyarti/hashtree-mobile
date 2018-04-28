@@ -30,9 +30,16 @@ import hashfunc.Hashfunc
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
-
+import android.support.v4.app.ActivityCompat
+import android.Manifest
+import android.content.pm.PackageManager
+import android.provider.MediaStore
+import android.support.v4.content.ContextCompat
+import android.util.Log
 
 import java.io.*
+import java.nio.file.Paths
+
 
 class MainActivity : AppCompatActivity() {
     // make categories global
@@ -45,6 +52,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // get permissions
+        val permissions = arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        ActivityCompat.requestPermissions(this, permissions,0)
         // spinner
         val spinner: Spinner = findViewById(R.id.spinner)
         categories.add("PRESS LIST")
@@ -60,40 +70,61 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
         button2.setOnClickListener {
-            //toast("Fetching snapshot list.")
-            //list()
+            if (setupPermissions()) {
+                var server = PreferenceManager.getDefaultSharedPreferences(this).getString("text_server", "")
+                var accesskey = PreferenceManager.getDefaultSharedPreferences(this).getString("text_accesskey", "")
+                var secretkey = PreferenceManager.getDefaultSharedPreferences(this).getString("text_secretkey", "")
+                var enckey = PreferenceManager.getDefaultSharedPreferences(this).getString("text_enckey", "")
+                var bucket = PreferenceManager.getDefaultSharedPreferences(this).getString("text_bucket", "")
+                var secure = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("example_switch", true)
+                button2.setEnabled(false)
+                toast("Fetching snapshotlist...")
+                List(server, accesskey, secretkey, enckey, bucket, secure, w)
+            } else {
+                toast("Need storage permission enabled!")
+            }
         }
         button3.setOnClickListener {
-            button3.setEnabled(false)
-            //async(UI) { test() }
-            // variables
-            var server = PreferenceManager.getDefaultSharedPreferences(this).getString("text_server", "")
-            var accesskey = PreferenceManager.getDefaultSharedPreferences(this).getString("text_accesskey", "")
-            var secretkey = PreferenceManager.getDefaultSharedPreferences(this).getString("text_secretkey", "")
-            var enckey = PreferenceManager.getDefaultSharedPreferences(this).getString("text_enckey", "")
-            var bucket = PreferenceManager.getDefaultSharedPreferences(this).getString("text_bucket", "")
-            var secure = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("example_switch", true)
-            var snapshot_name: String
-            snapshot_name = spinner.selectedItem.toString()
-            val fileName: String = w + "/" + snapshot_name
-            textView.append("Starting download of $snapshot_name\n")
-            Download(server, accesskey, secretkey, enckey, bucket, snapshot_name, fileName, secure, w)
+            if (setupPermissions()) {
+
+                toast("Starting download...")
+                button3.setEnabled(false)
+                //async(UI) { test() }
+                // variables
+                var server = PreferenceManager.getDefaultSharedPreferences(this).getString("text_server", "")
+                var accesskey = PreferenceManager.getDefaultSharedPreferences(this).getString("text_accesskey", "")
+                var secretkey = PreferenceManager.getDefaultSharedPreferences(this).getString("text_secretkey", "")
+                var enckey = PreferenceManager.getDefaultSharedPreferences(this).getString("text_enckey", "")
+                var bucket = PreferenceManager.getDefaultSharedPreferences(this).getString("text_bucket", "")
+                var secure = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("example_switch", true)
+                var snapshot_name: String
+                snapshot_name = spinner.selectedItem.toString()
+                val fileName: String = w + "/" + snapshot_name
+                Download(server, accesskey, secretkey, enckey, bucket, snapshot_name, fileName, secure, w)
+            } else {
+                toast("Need storage permission enabled!")
+
+            }
         }
         button4.setOnClickListener {
-            button4.setEnabled(false)
-            //async(UI) { test() }
-            // variables
-            var server = PreferenceManager.getDefaultSharedPreferences(this).getString("text_server", "")
-            var accesskey = PreferenceManager.getDefaultSharedPreferences(this).getString("text_accesskey", "")
-            var secretkey = PreferenceManager.getDefaultSharedPreferences(this).getString("text_secretkey", "")
-            var enckey = PreferenceManager.getDefaultSharedPreferences(this).getString("text_enckey", "")
-            var bucket = PreferenceManager.getDefaultSharedPreferences(this).getString("text_bucket", "")
-            var secure = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("example_switch", true)
-            var snapshot_name: String
-            snapshot_name = spinner.selectedItem.toString()
-            val fileName: String = w + "/" + snapshot_name
-            textView.append("Starting download of $snapshot_name\n")
-            Upload(server, accesskey, secretkey, enckey, bucket, snapshot_name, fileName, secure, w)
+            if (setupPermissions()) {
+
+                toast("Starting upload...")
+                button4.setEnabled(false)
+                // variables
+                var server = PreferenceManager.getDefaultSharedPreferences(this).getString("text_server", "")
+                var accesskey = PreferenceManager.getDefaultSharedPreferences(this).getString("text_accesskey", "")
+                var secretkey = PreferenceManager.getDefaultSharedPreferences(this).getString("text_secretkey", "")
+                var enckey = PreferenceManager.getDefaultSharedPreferences(this).getString("text_enckey", "")
+                var bucket = PreferenceManager.getDefaultSharedPreferences(this).getString("text_bucket", "")
+                var secure = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("example_switch", true)
+                var snapshot_name: String
+                snapshot_name = spinner.selectedItem.toString()
+                val fileName: String = w + "/" + snapshot_name
+                Upload(server, accesskey, secretkey, enckey, bucket, snapshot_name, fileName, secure, w)
+            } else {
+                toast("Need storage permission enabled!")
+            }
 
         }
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -125,6 +156,15 @@ class MainActivity : AppCompatActivity() {
 
         return tasks
     }
+    private fun setupPermissions(): Boolean {
+        val permission = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            return false
+            toast("ERROR: Permission Denied!")
+        } else { return true }
+    }
 
     fun Context.test() {
         fun sleeper(i: Int): String {
@@ -139,9 +179,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun Context.Download(server: String, accesskey: String, secretkey: String, enckey: String, bucket: String, snapshot_name: String, fileName: String, secure: Boolean, w: String) = async(UI) {
-        // text view console
-        val tview: TextView = findViewById(R.id.textView)
-        tview.append("Fetching snapshotlist...\n")
         var s = Hashfunc.download(server, 443, secure, accesskey, secretkey, enckey, fileName, snapshot_name, bucket, true)
         if (s != "ERROR") {
             var remotedb = mutableMapOf<String, MutableList<String>>()
@@ -163,39 +200,31 @@ class MainActivity : AppCompatActivity() {
                             if (s == "ERROR") {
                                 i++
                             } else {
-                                tview.append("[D] => fpath")
+                                textView.append("[D] => $fpath\n")
                                 i = 3
                             }
                         }
                     }
                 }
             }
+            deleteFile(fileName)
         } else {
             toast("Error downloading snapshot!")
         }
         button3.setEnabled(true)
     }
-
-    fun Context.list() {
-        var server = PreferenceManager.getDefaultSharedPreferences(this).getString("text_server", "")
-        var accesskey = PreferenceManager.getDefaultSharedPreferences(this).getString("text_accesskey", "")
-        var secretkey = PreferenceManager.getDefaultSharedPreferences(this).getString("text_secretkey", "")
-        var enckey = PreferenceManager.getDefaultSharedPreferences(this).getString("text_enckey", "")
-        var secure = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("example_switch", true)
-        var bucket = PreferenceManager.getDefaultSharedPreferences(this).getString("text_bucket", "")
-
+    fun Context.List(server: String, accesskey: String, secretkey: String, enckey: String, bucket: String, secure: Boolean, w: String) = async(UI) {
         var h = Hashfunc.hashlist(server, secure, accesskey, secretkey, bucket)
-
         if (h != "ERROR") {
             var snapshots = h.lines()
             snapshots.forEach {
                 var fpath = w + "/" + it
                 if (!it.isBlank()) {
                     categories.add(it)
-                    textView.append(it + "\n")
                 }
             }
         }
+        button2.setEnabled(true)
     }
 
     fun Context.readdb(fileName: String): MutableMap<String, MutableList<String>> {
@@ -228,7 +257,6 @@ class MainActivity : AppCompatActivity() {
                         // append to map
                         remotedb[hash] = mutableListOf()
                         remotedb[hash]?.add(fpath)
-                        //textView.append(hash + " => " + fpath)
                     }
 
                 }
@@ -241,10 +269,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun Context.Upload(server: String, accesskey: String, secretkey: String, enckey: String, bucket: String, snapshot_name: String, fileName: String, secure: Boolean, w: String) = async(UI) {
-        // text view console
-        val tview: TextView = findViewById(R.id.textView)
-        tview.append("Uploading files...\n")
-        //var s = Hello.upload(server, 443, secure, accesskey, secretkey, enckey, fileName, snapshot_name, bucket, true)
         val i = Hashfunc.hashtree(server, accesskey, secretkey, enckey, bucket, secure, w)
         if (i) {
             toast("Uploads successful!")
