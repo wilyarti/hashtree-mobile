@@ -88,16 +88,15 @@ func getEncryptedSize(size int64) int64 {
 
 // Upload will upload a map of files with the following format:
 // hash -> filepath
-func Upload(url string, port int, secure bool, accesskey string, secretkey string, enckey string, filelist map[string]string, bucket string, consolebufptr *[]byte, curptr *int32, msgbufptr *[]byte) ([]string, error) {
+func Upload(url string, port int, secure bool, accesskey string, secretkey string, enckey string, filelist map[string]string, bucket string) ([]string, error) {
 	// break up map into 5 parts
 	jobs := make(chan map[string]string, MAX)
 	results := make(chan string, len(filelist))
-	*curptr = 0
 
 	// This starts up MAX workers, initially blocked
 	// because there are no jobs yet.
 	for w := 1; w <= MAX; w++ {
-		go uploadfile(bucket, url, secure, accesskey, secretkey, enckey, w, jobs, int32(len(filelist)), consolebufptr, curptr, msgbufptr, results)
+		go uploadfile(bucket, url, secure, accesskey, secretkey, enckey, w, jobs, int32(len(filelist)), results)
 	}
 
 	// Here we send MAX `jobs` and then `close` that
@@ -128,15 +127,14 @@ func Upload(url string, port int, secure bool, accesskey string, secretkey strin
 	}
 	if errCount != 0 {
 		out := fmt.Sprintf("Failed to upload: %v files", errCount)
-		*consolebufptr = []byte(fmt.Sprintln(out))
-
+		fmt.Println(out)
 		return failed, errors.New(out)
 	}
 	return failed, nil
 
 }
 
-func uploadfile(bucket string, url string, secure bool, accesskey string, secretkey string, enckey string, id int, jobs <-chan map[string]string, numjobs int32, consolebufptr *[]byte, curptr *int32, msgbufptr *[]byte, results chan<- string) {
+func uploadfile(bucket string, url string, secure bool, accesskey string, secretkey string, enckey string, id int, jobs <-chan map[string]string, numjobs int32, results chan<- string) {
 	for j := range jobs {
 		for hash, filepath := range j {
 			s3Client, err := minio.New(url, accesskey, secretkey, secure)
@@ -144,8 +142,6 @@ func uploadfile(bucket string, url string, secure bool, accesskey string, secret
 			if err != nil {
 				out := fmt.Sprintf("[F] %s => %s failed to upload: %s", hash, filepath, err)
 				fmt.Println(out)
-				*consolebufptr = []byte(fmt.Sprintln(out))
-				*curptr = (*curptr + (1000000 / numjobs))
 				results <- hash
 				break
 			}
@@ -155,8 +151,6 @@ func uploadfile(bucket string, url string, secure bool, accesskey string, secret
 			if err != nil {
 				out := fmt.Sprintf("[F] %s => %s failed to upload: %s", hash, filepath, err)
 				fmt.Println(out)
-				*consolebufptr = []byte(fmt.Sprintln(out))
-				*curptr = (*curptr + (1000000 / numjobs))
 				results <- hash
 				break
 			}
@@ -165,8 +159,6 @@ func uploadfile(bucket string, url string, secure bool, accesskey string, secret
 			if err != nil {
 				out := fmt.Sprintf("[F] %s => %s failed to upload: %s", hash, filepath, err)
 				fmt.Println(out)
-				*consolebufptr = []byte(fmt.Sprintln(out))
-				*curptr = (*curptr + (1000000 / numjobs))
 				results <- hash
 				break
 			}
@@ -179,8 +171,6 @@ func uploadfile(bucket string, url string, secure bool, accesskey string, secret
 			if err != nil {
 				out := fmt.Sprintf("[F] %s => %s failed to upload: %s", hash, filepath, err)
 				fmt.Println(out)
-				*consolebufptr = []byte(fmt.Sprintln(out))
-				*curptr = (*curptr + (1000000 / numjobs))
 				results <- hash
 				break
 			}
@@ -196,8 +186,6 @@ func uploadfile(bucket string, url string, secure bool, accesskey string, secret
 					if i == 3 {
 						out := fmt.Sprintf("[F] %s => %s failed to upload: %s", hash, filepath, err)
 						fmt.Println(out)
-						*consolebufptr = []byte(fmt.Sprintln(out))
-						*curptr = (*curptr + (1000000 / numjobs))
 						results <- hash
 						break
 					}
@@ -206,14 +194,10 @@ func uploadfile(bucket string, url string, secure bool, accesskey string, secret
 					if len(hash) == 64 {
 						out := fmt.Sprintf("(%s)(%s) %s => %s\n", elapsed, humanize.Bytes(s), hash[:8], b)
 						fmt.Print(out)
-						*curptr = (*curptr + (1000000 / numjobs))
-						*msgbufptr = []byte(fmt.Sprintln(out))
 
 					} else {
 						out := fmt.Sprintf("(%s)(%s) %s => %s\n", elapsed, humanize.Bytes(s), hash, b)
 						fmt.Print(out)
-						*curptr = (*curptr + (1000000 / numjobs))
-						*msgbufptr = []byte(fmt.Sprintln(out))
 					}
 					results <- ""
 					break

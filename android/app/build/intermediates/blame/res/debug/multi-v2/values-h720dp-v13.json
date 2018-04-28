@@ -4,15 +4,8 @@
             "outputFile": "/home/undef/go/src/hashtree-mobile/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-h720dp-v13/values-h720dp-v13.xml",
             "map": [
                 {
-                    "source": "/home/undef/.gradle/caches/transforms-1/files-1.1/appcompat-v7-22.1.1.aar/a91aa4605badbd2e67fd979bdd41c01c/res/values-h720dp-v13/values.xml",
+                    "source": "/home/undef/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/30dda12390feff12821ffb6fedaedeaa/res/values-h720dp-v13/values-h720dp-v13.xml",
                     "from": {
-                        "startLines": "4",
-                        "startColumns": "4",
-                        "startOffsets": "294",
-                        "endColumns": "66",
-                        "endOffsets": "356"
-                    },
-                    "to": {
                         "startLines": "2",
                         "startColumns": "4",
                         "startOffsets": "55",

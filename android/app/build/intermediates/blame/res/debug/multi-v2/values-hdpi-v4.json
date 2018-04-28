@@ -4,22 +4,14 @@
             "outputFile": "/home/undef/go/src/hashtree-mobile/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-hdpi-v4/values-hdpi-v4.xml",
             "map": [
                 {
-                    "source": "/home/undef/.gradle/caches/transforms-1/files-1.1/appcompat-v7-22.1.1.aar/a91aa4605badbd2e67fd979bdd41c01c/res/values-hdpi-v4/values.xml",
+                    "source": "/home/undef/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/30dda12390feff12821ffb6fedaedeaa/res/values-hdpi-v4/values-hdpi-v4.xml",
                     "from": {
-                        "startLines": "4",
-                        "startColumns": "4",
-                        "startOffsets": "297",
-                        "endLines": "8",
-                        "endColumns": "13",
-                        "endOffsets": "567"
-                    },
-                    "to": {
                         "startLines": "2",
                         "startColumns": "4",
                         "startOffsets": "55",
                         "endLines": "6",
                         "endColumns": "13",
-                        "endOffsets": "325"
+                        "endOffsets": "327"
                     }
                 }
             ]

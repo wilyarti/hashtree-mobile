@@ -1,0 +1,72 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="example_switch"
+        android:summary="@string/pref_secure_description"
+        android:title="@string/pref_secure" />
+
+    <!-- NOTE: EditTextPreference accepts EditText attributes. -->
+    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="@string/pref_bucket_default"
+        android:inputType="text"
+        android:key="text_bucket"
+        android:maxLines="1"
+        android:summary="@string/pref_bucket_description"
+
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_bucket"
+        android:visibility="visible" />
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="@string/pref_server_default"
+        android:inputType="text"
+        android:key="text_server"
+        android:maxLines="1"
+        android:summary="@string/pref_server_description"
+
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_server"
+        android:visibility="visible" />
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="@string/pref_accesskey_default"
+        android:inputType="text"
+        android:key="text_accesskey"
+        android:maxLines="1"
+        android:summary="@string/pref_accesskey_description"
+
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:visibility="visible"
+        android:title="@string/pref_accesskey" />
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="@string/pref_secretkey_default"
+        android:inputType="text"
+        android:key="text_secretkey"
+        android:maxLines="1"
+        android:summary="@string/pref_secretkey_description"
+
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:visibility="visible"
+        android:title="@string/pref_secretkey" />
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="@string/pref_enckey_default"
+        android:inputType="text"
+        android:key="text_enckey"
+        android:maxLines="1"
+        android:summary="@string/pref_enckey_description"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:visibility="visible"
+        android:title="@string/pref_enckey" />
+
+
+</PreferenceScreen>

@@ -1,0 +1,84 @@
+<resources>
+    <string name="app_name">hashtree-mobile</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_secure">Enable secure server connection</string>
+    <string name="pref_secure_description">Use HTTPS to establish a connection instead of HTTP.
+    </string>
+
+    <string name="pref_server">Remote Server</string>
+    <string name="pref_server_default">sgp1.digitaloceanspaces.com</string>
+    <string name="pref_server_description">Remote S3 compatible server to upload files to.</string>
+
+    <string name="pref_bucket">S3 Bucket Name</string>
+    <string name="pref_bucket_default">hashtree</string>
+    <string name="pref_bucket_description">Remote S3 bucket name to upload into.</string>
+
+    <string name="pref_accesskey">Access Key</string>
+    <string name="pref_accesskey_default">Your Access Key</string>
+    <string name="pref_accesskey_description">Your access key required to access S3 buckets and resources.</string>
+
+
+    <string name="pref_secretkey">Secret Key</string>
+    <string name="pref_secretkey_default">Your Secret Key</string>
+    <string name="pref_secretkey_description">Your secret key, the second part of the key pair.</string>
+
+
+    <string name="pref_enckey">Encryption Key</string>
+    <string name="pref_enckey_default">Your Encryption Key</string>
+    <string name="pref_enckey_description">Your secret encryption key, this will be used to encrypt and decrypt all files locally before uploading them.</string>
+
+
+
+    <!-- Example settings for Data & Sync -->
+    <string name="pref_header_data_sync">Data &amp; sync</string>
+
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+        <item>360</item>
+        <item>-1</item>
+    </string-array>
+
+    <string-array name="list_preference_entries">
+        <item>Entry 1</item>
+        <item>Entry 2</item>
+        <item>Entry 3</item>
+    </string-array>
+
+    <string-array name="list_preference_entry_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="multi_select_list_preference_default_value" />
+
+    <string name="pref_title_system_sync_settings">System sync settings</string>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">Notifications</string>
+
+    <string name="pref_title_new_message_notifications">New message notifications</string>
+
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Silent</string>
+
+    <string name="pref_title_vibrate">Vibrate</string>
+</resources>

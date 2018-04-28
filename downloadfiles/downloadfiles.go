@@ -92,17 +92,16 @@ func decryptedSize(encryptedSize int64) (int64, error) {
 }
 
 // Download a list of file in format name => dest
-func Download(url string, port int, secure bool, accesskey string, secretkey string, enckey string, filelist map[string]string, bucket string, consolebufptr *[]byte, curptr *int32, msgbufptr *[]byte, nuke bool) ([]string, error) {
+func Download(url string, port int, secure bool, accesskey string, secretkey string, enckey string, filelist map[string]string, bucket string, nuke bool) ([]string, error) {
 	// break up map into 5 parts
 	jobs := make(chan map[string]string, MAX)
 	results := make(chan string, len(filelist))
 	// reset progress bar
-	*curptr = 0
 
 	// This starts up MAX workers, initially blocked
 	// because there are no jobs yet.
 	for w := 1; w <= MAX; w++ {
-		go downloadfile(bucket, url, secure, accesskey, secretkey, enckey, w, nuke, jobs, int32(len(filelist)), consolebufptr, curptr, msgbufptr, results)
+		go downloadfile(bucket, url, secure, accesskey, secretkey, enckey, w, nuke, jobs, int32(len(filelist)), results)
 	}
 
 	// Here we send MAX `jobs` and then `close` that
@@ -135,15 +134,14 @@ func Download(url string, port int, secure bool, accesskey string, secretkey str
 
 	if errCount != 0 {
 		out := fmt.Sprintf("Failed to download: %v files", errCount)
-		*consolebufptr = []byte(fmt.Sprintln(out))
-
+		fmt.Println(out)
 		return failed, errors.New(out)
 	}
 	return failed, nil
 
 }
 
-func downloadfile(bucket string, url string, secure bool, accesskey string, secretkey string, enckey string, id int, nuke bool, jobs <-chan map[string]string, numjobs int32, consolebufptr *[]byte, curptr *int32, msgbufptr *[]byte, results chan<- string) {
+func downloadfile(bucket string, url string, secure bool, accesskey string, secretkey string, enckey string, id int, nuke bool, jobs <-chan map[string]string, numjobs int32, results chan<- string) {
 	for j := range jobs {
 		// hash is reversed: filepath => hash
 		for fpath, hash := range j {
@@ -152,8 +150,6 @@ func downloadfile(bucket string, url string, secure bool, accesskey string, secr
 				if err != nil {
 					out := fmt.Sprintf("[!] %s => %s failed to verify: %s", hash, fpath, err)
 					fmt.Println(out)
-					*consolebufptr = []byte(fmt.Sprintln(out))
-					*curptr = (*curptr + (1000000 / numjobs))
 					results <- hash
 					break
 				}
@@ -164,15 +160,11 @@ func downloadfile(bucket string, url string, secure bool, accesskey string, secr
 					b := path.Base(fpath)
 					out := fmt.Sprintf("[V]   %s => %s", hash[:8], b)
 					fmt.Println(out)
-					*consolebufptr = []byte(fmt.Sprintln(out))
-					*curptr = (*curptr + (1000000 / numjobs))
 					results <- ""
 					break
 				} else if (hash != checksum) && (nuke == false) {
 					out := fmt.Sprintf("[!] %s => %s local file differs from remote version!", hash, fpath)
 					fmt.Println(out)
-					*consolebufptr = []byte(fmt.Sprintln(out))
-					*curptr = (*curptr + (1000000 / numjobs))
 					results <- hash
 					break
 
@@ -183,8 +175,6 @@ func downloadfile(bucket string, url string, secure bool, accesskey string, secr
 			if err != nil {
 				out := fmt.Sprintf("[!] %s => %s failed to download: %s", hash, fpath, err)
 				fmt.Println(out)
-				*consolebufptr = []byte(fmt.Sprintln(out))
-				*curptr = (*curptr + (1000000 / numjobs))
 				results <- hash
 				break
 			}
@@ -205,8 +195,6 @@ func downloadfile(bucket string, url string, secure bool, accesskey string, secr
 					if i == 3 {
 						out := fmt.Sprintf("[!] %s => %s failed to download: %s", hash, fpath, err)
 						fmt.Println(out)
-						*consolebufptr = []byte(fmt.Sprintln(out))
-						*curptr = (*curptr + (1000000 / numjobs))
 						results <- hash
 						break
 					}
@@ -216,8 +204,6 @@ func downloadfile(bucket string, url string, secure bool, accesskey string, secr
 				if err != nil {
 					out := fmt.Sprintf("[!] %s => %s failed to download: %s", hash, fpath, err)
 					fmt.Println(out)
-					*consolebufptr = []byte(fmt.Sprintln(out))
-					*curptr = (*curptr + (1000000 / numjobs))
 					results <- hash
 					break
 				}
@@ -226,8 +212,6 @@ func downloadfile(bucket string, url string, secure bool, accesskey string, secr
 				if err != nil {
 					out := fmt.Sprintf("[!] %s => %s failed to download: %s", hash, fpath, err)
 					fmt.Println(out)
-					*consolebufptr = []byte(fmt.Sprintln(out))
-					*curptr = (*curptr + (1000000 / numjobs))
 					results <- hash
 					break
 				}
@@ -235,8 +219,6 @@ func downloadfile(bucket string, url string, secure bool, accesskey string, secr
 				if err != nil {
 					out := fmt.Sprintf("[!] %s => %s Error creating file.", hash, fpath)
 					fmt.Println(out)
-					*consolebufptr = []byte(fmt.Sprintln(out))
-					*curptr = (*curptr + (1000000 / numjobs))
 					results <- hash
 					break
 				}
@@ -251,8 +233,6 @@ func downloadfile(bucket string, url string, secure bool, accesskey string, secr
 				if err != nil {
 					out := fmt.Sprintf("[!] %s => %s failed to download: %s", hash, fpath, err)
 					fmt.Println(out)
-					*consolebufptr = []byte(fmt.Sprintln(out))
-					*curptr = (*curptr + (1000000 / numjobs))
 					results <- hash
 					break
 				}
@@ -260,8 +240,6 @@ func downloadfile(bucket string, url string, secure bool, accesskey string, secr
 				if err != nil {
 					out := fmt.Sprintf("[!] %s => %s failed to download: %s", hash, fpath, err)
 					fmt.Println(out)
-					*consolebufptr = []byte(fmt.Sprintln(out))
-					*curptr = (*curptr + (1000000 / numjobs))
 					results <- hash
 					break
 				}
@@ -272,8 +250,6 @@ func downloadfile(bucket string, url string, secure bool, accesskey string, secr
 					if err != nil {
 						out := fmt.Sprintf("[!] %s => %s failed to download: %s", hash, fpath, err)
 						fmt.Println(out)
-						*consolebufptr = []byte(fmt.Sprintln(out))
-						*curptr = (*curptr + (1000000 / numjobs))
 						results <- hash
 						break
 					}
@@ -283,8 +259,6 @@ func downloadfile(bucket string, url string, secure bool, accesskey string, secr
 					if hash != checksum {
 						out := fmt.Sprintf("[!] %s => %s checksum mismatch!", hash, fpath)
 						fmt.Println(out)
-						*msgbufptr = []byte(fmt.Sprintln(out))
-						*curptr = (*curptr + (1000000 / numjobs))
 						results <- hash
 						break
 
@@ -292,16 +266,12 @@ func downloadfile(bucket string, url string, secure bool, accesskey string, secr
 					out := fmt.Sprintf("(%s)(%s) %s => %s\n", elapsed, humanize.Bytes(s), hash[:8], b)
 
 					fmt.Println(out)
-					*consolebufptr = []byte(fmt.Sprintln(out))
-					*curptr = (*curptr + (1000000 / numjobs))
 					results <- ""
 					break
 
 				} else {
 					out := fmt.Sprintf("(%s)(%s) %s => %s\n", elapsed, humanize.Bytes(s), hash, b)
 					fmt.Println(out)
-					*msgbufptr = []byte(fmt.Sprintln(out))
-					*curptr = (*curptr + (1000000 / numjobs))
 					results <- ""
 					break
 				}

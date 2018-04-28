@@ -1,65 +1,123 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:5:1-22:12
-INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:5:1-22:12
-INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:5:1-22:12
-INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:5:1-22:12
-MERGED from [com.android.support:appcompat-v7:22.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/appcompat-v7-22.1.1.aar/a91aa4605badbd2e67fd979bdd41c01c/AndroidManifest.xml:17:1-24:12
-MERGED from [:hello] /home/undef/.gradle/caches/transforms-1/files-1.1/hello.aar/2d929cf37f76a90def20da729105197c/AndroidManifest.xml:1:1-2:50
-MERGED from [com.android.support:support-v4:22.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-v4-22.1.1.aar/1190d692dce430bbfeb26bc09fe9bc66/AndroidManifest.xml:17:1-24:12
-INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:5:1-22:12
-INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:5:1-22:12
-INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:5:1-22:12
+ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:2:1-28:12
+INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:2:1-28:12
+INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:2:1-28:12
+INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:2:1-28:12
+MERGED from [com.android.support:appcompat-v7:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/30dda12390feff12821ffb6fedaedeaa/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support.constraint:constraint-layout:1.1.0] /home/undef/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.1.0.aar/2d1f5596bcb46340b19cf81817db6794/AndroidManifest.xml:2:1-11:12
+MERGED from [com.android.support:support-v4:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-v4-27.1.1.aar/964020bc647c3053ced71b0a4616fd75/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:animated-vector-drawable:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-27.1.1.aar/0796bf12f920dc795dda19d37d188b2c/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-vector-drawable:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-27.1.1.aar/1fcd5cd86a16acfffae70b7d9e222411/AndroidManifest.xml:17:1-22:12
+MERGED from [:hashfunc] /home/undef/.gradle/caches/transforms-1/files-1.1/hashfunc.aar/fe8a8ca8277764836a9a905b101b63c8/AndroidManifest.xml:1:1-2:50
+MERGED from [com.android.support:support-fragment:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-fragment-27.1.1.aar/aab6a4b5d21e524c5f53d9193be8a552/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-ui:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-core-ui-27.1.1.aar/78aa1763ea9bd5443057c9dd9d81e983/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-utils:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-core-utils-27.1.1.aar/193788e574415bb80bde43e1f077d4f4/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-media-compat:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-media-compat-27.1.1.aar/40e109db0e33ac8ffbfaae2443ec8859/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-compat:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/e5183533d4c3bcc5f9ff4afb58434350/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:livedata-core:1.1.0] /home/undef/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.0.aar/e31c1aaf4687daeb85d79fbd762cda85/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:viewmodel:1.1.0] /home/undef/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.0.aar/56c7f987839d0b2d407eac1644ac14c7/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:runtime:1.1.0] /home/undef/.gradle/caches/transforms-1/files-1.1/runtime-1.1.0.aar/33d2f6940234fe268279eda695aed031/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.core:runtime:1.1.0] /home/undef/.gradle/caches/transforms-1/files-1.1/runtime-1.1.0.aar/16e44ddbca15796830c5586361d0b999/AndroidManifest.xml:17:1-22:12
+INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:2:1-28:12
+INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:2:1-28:12
+INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:2:1-28:12
 	package
-		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:6:5-38
+		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:3:5-58
 		INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml
 		INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml
 	android:versionName
 		INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml
-		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:5:1-22:12
+		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:2:1-28:12
 		INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml
 	android:versionCode
 		INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml
-		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:5:1-22:12
+		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:2:1-28:12
 		INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml
 	xmlns:android
-		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:5:11-69
+		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:2:11-69
+uses-permission#android.permission.INTERNET
+ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:4:5-67
+	android:name
+		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:4:22-64
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:5:5-96
+	android:name
+		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:5:22-77
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:6:5-98
+	android:name
+		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:6:22-78
 application
-ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:8:5-20:19
-MERGED from [com.android.support:appcompat-v7:22.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/appcompat-v7-22.1.1.aar/a91aa4605badbd2e67fd979bdd41c01c/AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:appcompat-v7:22.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/appcompat-v7-22.1.1.aar/a91aa4605badbd2e67fd979bdd41c01c/AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:support-v4:22.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-v4-22.1.1.aar/1190d692dce430bbfeb26bc09fe9bc66/AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:support-v4:22.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-v4-22.1.1.aar/1190d692dce430bbfeb26bc09fe9bc66/AndroidManifest.xml:22:5-20
+ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:8:5-26:19
+MERGED from [com.android.support.constraint:constraint-layout:1.1.0] /home/undef/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.1.0.aar/2d1f5596bcb46340b19cf81817db6794/AndroidManifest.xml:9:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.1.0] /home/undef/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.1.0.aar/2d1f5596bcb46340b19cf81817db6794/AndroidManifest.xml:9:5-20
+	android:supportsRtl
+		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:13:9-35
 	android:label
-		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:10:9-38
+		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:11:9-41
+	android:roundIcon
+		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:12:9-54
+	android:icon
+		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:10:9-43
 	android:allowBackup
 		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:9:9-35
-activity#org.golang.example.bind.MainActivity
-ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:11:9-19:20
-	android:label
-		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:13:13-42
+	android:theme
+		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:14:9-40
+activity#com.wordpress.clinetworking.hashtree_mobile.MainActivity
+ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:16:9-22:20
 	android:name
-		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:12:13-41
+		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:16:19-47
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:14:13-18:29
+ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:17:13-21:29
 action#android.intent.action.MAIN
-ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:15:17-69
+ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:18:17-69
 	android:name
-		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:15:25-66
+		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:18:25-66
 category#android.intent.category.LAUNCHER
-ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:17:17-77
+ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:20:17-77
 	android:name
-		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:17:27-74
+		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:20:27-74
+activity#com.wordpress.clinetworking.hashtree_mobile.SettingsActivity
+ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:23:9-25:72
+	android:label
+		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:25:13-60
+	android:name
+		ADDED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml:24:13-45
 uses-sdk
 INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml
 INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml
-MERGED from [com.android.support:appcompat-v7:22.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/appcompat-v7-22.1.1.aar/a91aa4605badbd2e67fd979bdd41c01c/AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:appcompat-v7:22.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/appcompat-v7-22.1.1.aar/a91aa4605badbd2e67fd979bdd41c01c/AndroidManifest.xml:20:5-43
-MERGED from [:hello] /home/undef/.gradle/caches/transforms-1/files-1.1/hello.aar/2d929cf37f76a90def20da729105197c/AndroidManifest.xml:2:1-39
-MERGED from [:hello] /home/undef/.gradle/caches/transforms-1/files-1.1/hello.aar/2d929cf37f76a90def20da729105197c/AndroidManifest.xml:2:1-39
-MERGED from [com.android.support:support-v4:22.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-v4-22.1.1.aar/1190d692dce430bbfeb26bc09fe9bc66/AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:support-v4:22.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-v4-22.1.1.aar/1190d692dce430bbfeb26bc09fe9bc66/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:appcompat-v7:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/30dda12390feff12821ffb6fedaedeaa/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/30dda12390feff12821ffb6fedaedeaa/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support.constraint:constraint-layout:1.1.0] /home/undef/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.1.0.aar/2d1f5596bcb46340b19cf81817db6794/AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support.constraint:constraint-layout:1.1.0] /home/undef/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.1.0.aar/2d1f5596bcb46340b19cf81817db6794/AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support:support-v4:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-v4-27.1.1.aar/964020bc647c3053ced71b0a4616fd75/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-v4-27.1.1.aar/964020bc647c3053ced71b0a4616fd75/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-27.1.1.aar/0796bf12f920dc795dda19d37d188b2c/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-27.1.1.aar/0796bf12f920dc795dda19d37d188b2c/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-27.1.1.aar/1fcd5cd86a16acfffae70b7d9e222411/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-27.1.1.aar/1fcd5cd86a16acfffae70b7d9e222411/AndroidManifest.xml:20:5-44
+MERGED from [:hashfunc] /home/undef/.gradle/caches/transforms-1/files-1.1/hashfunc.aar/fe8a8ca8277764836a9a905b101b63c8/AndroidManifest.xml:2:1-39
+MERGED from [:hashfunc] /home/undef/.gradle/caches/transforms-1/files-1.1/hashfunc.aar/fe8a8ca8277764836a9a905b101b63c8/AndroidManifest.xml:2:1-39
+MERGED from [com.android.support:support-fragment:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-fragment-27.1.1.aar/aab6a4b5d21e524c5f53d9193be8a552/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-fragment-27.1.1.aar/aab6a4b5d21e524c5f53d9193be8a552/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-core-ui-27.1.1.aar/78aa1763ea9bd5443057c9dd9d81e983/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-core-ui-27.1.1.aar/78aa1763ea9bd5443057c9dd9d81e983/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-core-utils-27.1.1.aar/193788e574415bb80bde43e1f077d4f4/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-core-utils-27.1.1.aar/193788e574415bb80bde43e1f077d4f4/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-media-compat:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-media-compat-27.1.1.aar/40e109db0e33ac8ffbfaae2443ec8859/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-media-compat:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-media-compat-27.1.1.aar/40e109db0e33ac8ffbfaae2443ec8859/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/e5183533d4c3bcc5f9ff4afb58434350/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/e5183533d4c3bcc5f9ff4afb58434350/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.0] /home/undef/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.0.aar/e31c1aaf4687daeb85d79fbd762cda85/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.0] /home/undef/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.0.aar/e31c1aaf4687daeb85d79fbd762cda85/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.0] /home/undef/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.0.aar/56c7f987839d0b2d407eac1644ac14c7/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.0] /home/undef/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.0.aar/56c7f987839d0b2d407eac1644ac14c7/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.0] /home/undef/.gradle/caches/transforms-1/files-1.1/runtime-1.1.0.aar/33d2f6940234fe268279eda695aed031/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.0] /home/undef/.gradle/caches/transforms-1/files-1.1/runtime-1.1.0.aar/33d2f6940234fe268279eda695aed031/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.0] /home/undef/.gradle/caches/transforms-1/files-1.1/runtime-1.1.0.aar/16e44ddbca15796830c5586361d0b999/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.0] /home/undef/.gradle/caches/transforms-1/files-1.1/runtime-1.1.0.aar/16e44ddbca15796830c5586361d0b999/AndroidManifest.xml:20:5-44
 INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml
 INJECTED from /home/undef/go/src/hashtree-mobile/android/app/src/main/AndroidManifest.xml
 	android:targetSdkVersion
