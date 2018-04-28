@@ -92,6 +92,10 @@
         "source": "/home/undef/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/30dda12390feff12821ffb6fedaedeaa/res/anim/abc_tooltip_exit.xml"
     },
     {
+        "merged": "/home/undef/go/src/hashtree-mobile/android/app/build/intermediates/res/merged/debug/mipmap-xhdpi_ic_launcher_foreground.png.flat",
+        "source": "/home/undef/go/src/hashtree-mobile/android/app/src/main/res/mipmap-xhdpi/ic_launcher_foreground.png"
+    },
+    {
         "merged": "/home/undef/go/src/hashtree-mobile/android/app/build/intermediates/res/merged/debug/drawable-mdpi-v4_abc_switch_track_mtrl_alpha.9.png.flat",
         "source": "/home/undef/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/30dda12390feff12821ffb6fedaedeaa/res/drawable-mdpi-v4/abc_switch_track_mtrl_alpha.9.png"
     },
@@ -190,6 +194,10 @@
     {
         "merged": "/home/undef/go/src/hashtree-mobile/android/app/build/intermediates/res/merged/debug/drawable-xxxhdpi-v4_abc_ic_menu_cut_mtrl_alpha.png.flat",
         "source": "/home/undef/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/30dda12390feff12821ffb6fedaedeaa/res/drawable-xxxhdpi-v4/abc_ic_menu_cut_mtrl_alpha.png"
+    },
+    {
+        "merged": "/home/undef/go/src/hashtree-mobile/android/app/build/intermediates/res/merged/debug/mipmap-hdpi_ic_launcher_foreground.png.flat",
+        "source": "/home/undef/go/src/hashtree-mobile/android/app/src/main/res/mipmap-hdpi/ic_launcher_foreground.png"
     },
     {
         "merged": "/home/undef/go/src/hashtree-mobile/android/app/build/intermediates/res/merged/debug/drawable-mdpi-v4_abc_scrubber_control_to_pressed_mtrl_005.png.flat",
@@ -436,12 +444,12 @@
         "source": "/home/undef/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/30dda12390feff12821ffb6fedaedeaa/res/drawable-xxhdpi-v4/abc_list_pressed_holo_dark.9.png"
     },
     {
-        "merged": "/home/undef/go/src/hashtree-mobile/android/app/build/intermediates/res/merged/debug/drawable-hdpi-v4_abc_ic_star_half_black_36dp.png.flat",
-        "source": "/home/undef/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/30dda12390feff12821ffb6fedaedeaa/res/drawable-hdpi-v4/abc_ic_star_half_black_36dp.png"
-    },
-    {
         "merged": "/home/undef/go/src/hashtree-mobile/android/app/build/intermediates/res/merged/debug/color_abc_tint_edittext.xml.flat",
         "source": "/home/undef/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/30dda12390feff12821ffb6fedaedeaa/res/color/abc_tint_edittext.xml"
+    },
+    {
+        "merged": "/home/undef/go/src/hashtree-mobile/android/app/build/intermediates/res/merged/debug/drawable-hdpi-v4_abc_ic_star_half_black_36dp.png.flat",
+        "source": "/home/undef/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/30dda12390feff12821ffb6fedaedeaa/res/drawable-hdpi-v4/abc_ic_star_half_black_36dp.png"
     },
     {
         "merged": "/home/undef/go/src/hashtree-mobile/android/app/build/intermediates/res/merged/debug/drawable-xxhdpi-v4_abc_spinner_mtrl_am_alpha.9.png.flat",
@@ -622,6 +630,10 @@
     {
         "merged": "/home/undef/go/src/hashtree-mobile/android/app/build/intermediates/res/merged/debug/xml_pref_notification.xml.flat",
         "source": "/home/undef/go/src/hashtree-mobile/android/app/src/main/res/xml/pref_notification.xml"
+    },
+    {
+        "merged": "/home/undef/go/src/hashtree-mobile/android/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi_ic_launcher_foreground.png.flat",
+        "source": "/home/undef/go/src/hashtree-mobile/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png"
     },
     {
         "merged": "/home/undef/go/src/hashtree-mobile/android/app/build/intermediates/res/merged/debug/anim_abc_fade_out.xml.flat",
@@ -1200,6 +1212,10 @@
         "source": "/home/undef/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/30dda12390feff12821ffb6fedaedeaa/res/drawable-hdpi-v4/abc_textfield_search_activated_mtrl_alpha.9.png"
     },
     {
+        "merged": "/home/undef/go/src/hashtree-mobile/android/app/build/intermediates/res/merged/debug/mipmap-mdpi_ic_launcher_foreground.png.flat",
+        "source": "/home/undef/go/src/hashtree-mobile/android/app/src/main/res/mipmap-mdpi/ic_launcher_foreground.png"
+    },
+    {
         "merged": "/home/undef/go/src/hashtree-mobile/android/app/build/intermediates/res/merged/debug/drawable_abc_btn_default_mtrl_shape.xml.flat",
         "source": "/home/undef/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/30dda12390feff12821ffb6fedaedeaa/res/drawable/abc_btn_default_mtrl_shape.xml"
     },
@@ -1430,6 +1446,10 @@
     {
         "merged": "/home/undef/go/src/hashtree-mobile/android/app/build/intermediates/res/merged/debug/color-v23_abc_btn_colored_text_material.xml.flat",
         "source": "/home/undef/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/30dda12390feff12821ffb6fedaedeaa/res/color-v23/abc_btn_colored_text_material.xml"
+    },
+    {
+        "merged": "/home/undef/go/src/hashtree-mobile/android/app/build/intermediates/res/merged/debug/mipmap-xxhdpi_ic_launcher_foreground.png.flat",
+        "source": "/home/undef/go/src/hashtree-mobile/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_foreground.png"
     },
     {
         "merged": "/home/undef/go/src/hashtree-mobile/android/app/build/intermediates/res/merged/debug/layout_abc_list_menu_item_icon.xml.flat",

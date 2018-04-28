@@ -89,18 +89,25 @@ class MainActivity : AppCompatActivity() {
 
                 toast("Starting download...")
                 button3.setEnabled(false)
-                //async(UI) { test() }
-                // variables
-                var server = PreferenceManager.getDefaultSharedPreferences(this).getString("text_server", "")
-                var accesskey = PreferenceManager.getDefaultSharedPreferences(this).getString("text_accesskey", "")
-                var secretkey = PreferenceManager.getDefaultSharedPreferences(this).getString("text_secretkey", "")
-                var enckey = PreferenceManager.getDefaultSharedPreferences(this).getString("text_enckey", "")
-                var bucket = PreferenceManager.getDefaultSharedPreferences(this).getString("text_bucket", "")
-                var secure = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("example_switch", true)
-                var snapshot_name: String
-                snapshot_name = spinner.selectedItem.toString()
-                val fileName: String = w + "/" + snapshot_name
-                Download(server, accesskey, secretkey, enckey, bucket, snapshot_name, fileName, secure, w)
+                // make sure dest dir exists
+                val parent = File(w)
+                if (!parent.exists() && !parent.mkdirs()) {
+                    throw IllegalStateException("Couldn't create dir: " + parent);
+                    toast("Couldn't create dir for $w.")
+                } else {
+                    //async(UI) { test() }
+                    // variables
+                    var server = PreferenceManager.getDefaultSharedPreferences(this).getString("text_server", "")
+                    var accesskey = PreferenceManager.getDefaultSharedPreferences(this).getString("text_accesskey", "")
+                    var secretkey = PreferenceManager.getDefaultSharedPreferences(this).getString("text_secretkey", "")
+                    var enckey = PreferenceManager.getDefaultSharedPreferences(this).getString("text_enckey", "")
+                    var bucket = PreferenceManager.getDefaultSharedPreferences(this).getString("text_bucket", "")
+                    var secure = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("example_switch", true)
+                    var snapshot_name: String
+                    snapshot_name = spinner.selectedItem.toString()
+                    val fileName: String = w + "/" + snapshot_name
+                    Download(server, accesskey, secretkey, enckey, bucket, snapshot_name, fileName, secure, w)
+                }
             } else {
                 toast("Need storage permission enabled!")
 
@@ -108,20 +115,25 @@ class MainActivity : AppCompatActivity() {
         }
         button4.setOnClickListener {
             if (setupPermissions()) {
-
-                toast("Starting upload...")
-                button4.setEnabled(false)
-                // variables
-                var server = PreferenceManager.getDefaultSharedPreferences(this).getString("text_server", "")
-                var accesskey = PreferenceManager.getDefaultSharedPreferences(this).getString("text_accesskey", "")
-                var secretkey = PreferenceManager.getDefaultSharedPreferences(this).getString("text_secretkey", "")
-                var enckey = PreferenceManager.getDefaultSharedPreferences(this).getString("text_enckey", "")
-                var bucket = PreferenceManager.getDefaultSharedPreferences(this).getString("text_bucket", "")
-                var secure = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("example_switch", true)
-                var snapshot_name: String
-                snapshot_name = spinner.selectedItem.toString()
-                val fileName: String = w + "/" + snapshot_name
-                Upload(server, accesskey, secretkey, enckey, bucket, snapshot_name, fileName, secure, w)
+                val parent = File(w)
+                if (!parent.exists() && !parent.mkdirs()) {
+                    throw IllegalStateException("Couldn't create dir: " + parent);
+                    toast("Couldn't create dir for $w.")
+                } else {
+                    toast("Starting upload...")
+                    button4.setEnabled(false)
+                    // variables
+                    var server = PreferenceManager.getDefaultSharedPreferences(this).getString("text_server", "")
+                    var accesskey = PreferenceManager.getDefaultSharedPreferences(this).getString("text_accesskey", "")
+                    var secretkey = PreferenceManager.getDefaultSharedPreferences(this).getString("text_secretkey", "")
+                    var enckey = PreferenceManager.getDefaultSharedPreferences(this).getString("text_enckey", "")
+                    var bucket = PreferenceManager.getDefaultSharedPreferences(this).getString("text_bucket", "")
+                    var secure = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("example_switch", true)
+                    var snapshot_name: String
+                    snapshot_name = spinner.selectedItem.toString()
+                    val fileName: String = w + "/" + snapshot_name
+                    Upload(server, accesskey, secretkey, enckey, bucket, snapshot_name, fileName, secure, w)
+                }
             } else {
                 toast("Need storage permission enabled!")
             }
