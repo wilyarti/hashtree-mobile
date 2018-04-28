@@ -1,4 +1,0 @@
-#Sat Apr 28 14:10:59 AEST 2018
-base.0=/home/undef/go/src/hashtree-mobile/android/app/build/intermediates/transforms/dexMerger/debug/0
-path.0=classes.dex
-renamed.0=classes.dex
