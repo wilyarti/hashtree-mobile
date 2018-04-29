@@ -52,8 +52,8 @@ class MainActivity : AppCompatActivity() {
         //// end
 
         // scrollview
-        var tview: TextView = findViewById(R.id.textView)
-        var smm = ScrollingMovementMethod()
+        val tview: TextView = findViewById(R.id.textView)
+        val smm = ScrollingMovementMethod()
         tview.movementMethod = smm
         // scroll.setMovement
 
@@ -100,8 +100,8 @@ class MainActivity : AppCompatActivity() {
                 // make sure dest dir exists
                 val parent = File(w)
                 if (!parent.exists() && !parent.mkdirs()) {
-                    throw IllegalStateException("Couldn't create dir: " + parent);
                     toast("Couldn't create dir for $w.")
+                    throw IllegalStateException("Couldn't create dir: " + parent);
                 } else {
                     // variables
                     var server = PreferenceManager.getDefaultSharedPreferences(this).getString("text_server", "")
@@ -126,8 +126,8 @@ class MainActivity : AppCompatActivity() {
             if (setupPermissions()) {
                 val parent = File(w)
                 if (!parent.exists() && !parent.mkdirs()) {
-                    throw IllegalStateException("Couldn't create dir: " + parent);
                     toast("Couldn't create dir for $w.")
+                    throw IllegalStateException("Couldn't create dir: " + parent);
                 } else {
                     toast("Starting upload...")
                     button2.setEnabled(false)
@@ -232,15 +232,12 @@ class MainActivity : AppCompatActivity() {
             launch(UI) {
                 val i = withContext(CommonPool) {
                     Hashfunc.hashseed(server, accesskey, secretkey, enckey, snapshot_name, bucket, secure, w, nuke)
+               }
+                if (i) {
+                    toast("Downloads successful!")
+                } else {
+                    toast("Downloads failed!")
                 }
-                    if (i) {
-                        print("Successful")
-                        toast("Downloads successful!")
-                    } else {
-                        print("Failed")
-                        toast("Failed to download!")
-                    }
-
                 button2.setEnabled(true)
                 button3.setEnabled(true)
                 button4.setEnabled(true)
