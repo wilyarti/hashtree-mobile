@@ -6,6 +6,7 @@ import android.content.Context
 import android.widget.Toast
 import android.view.View
 import android.widget.*
+import android.widget.ScrollView
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
@@ -18,6 +19,8 @@ import android.support.v4.app.ActivityCompat
 import android.Manifest
 import android.content.pm.PackageManager
 import android.support.v4.content.ContextCompat
+import android.text.method.ScrollingMovementMethod
+import kotlinx.coroutines.experimental.joinChildren
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.withContext
@@ -48,8 +51,14 @@ class MainActivity : AppCompatActivity() {
         spinner.adapter = dataAdapter
         //// end
 
+        // scrollview
+        var tview: TextView = findViewById(R.id.textView)
+        var smm = ScrollingMovementMethod()
+        tview.movementMethod = smm
+        // scroll.setMovement
+
         // callback
-        val gocb = GoCallback(this)
+        val gocb = GoCallback(this, CommonPool)
         Hashfunc.registerJavaCallback(gocb)
 
         // progress thingy
@@ -101,11 +110,11 @@ class MainActivity : AppCompatActivity() {
                     var enckey = PreferenceManager.getDefaultSharedPreferences(this).getString("text_enckey", "")
                     var bucket = PreferenceManager.getDefaultSharedPreferences(this).getString("text_bucket", "")
                     var secure = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("example_switch", true)
+                    var nuke = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("example_switch2", false)
                     var snapshot_name: String
                     snapshot_name = spinner.selectedItem.toString()
                     val fileName: String = w + "/" + snapshot_name
-                    Download(server, accesskey, secretkey, enckey, bucket, snapshot_name, fileName, secure, w)
-
+                    Download(server, accesskey, secretkey, enckey, bucket, snapshot_name, fileName, secure, w, nuke)
                 }
 
             } else {
@@ -172,7 +181,7 @@ class MainActivity : AppCompatActivity() {
         return tasks
     }
 
-    fun scrollToBottom() {
+    public fun scrollToBottom() {
         //scrollbar
         /// auto scroll
         var mTextStatus: TextView = findViewById(R.id.textView)
@@ -214,45 +223,47 @@ class MainActivity : AppCompatActivity() {
         for (i in 0..100) {
             Thread.sleep(100)
             textView.append("counting $i\n")
-            Hashfunc.testCall()
         }
         toast("job done")
     }
 
-    fun Context.Download(server: String, accesskey: String, secretkey: String, enckey: String, bucket: String, snapshot_name: String, fileName: String, secure: Boolean, w: String) = async(UI) {
+    fun Context.Download(server: String, accesskey: String, secretkey: String, enckey: String, bucket: String, snapshot_name: String, fileName: String, secure: Boolean, w: String, nuke: Boolean) {
         try {
             launch(UI) {
-                var s = Hashfunc.download(server, 443, secure, accesskey, secretkey, enckey, fileName, snapshot_name, bucket, true)
-                if (s != "ERROR") {
-                    var remotedb = mutableMapOf<String, MutableList<String>>()
-                    remotedb = withContext(CommonPool) { readdb(fileName) }
-                    println("Count " + remotedb.count())
-                    for ((key, value) in remotedb) {
-                        val iterate = value.listIterator()
-                        while (iterate.hasNext()) {
-                            var i = 0
-                            var fpath = w + "/" + iterate.next()
-                            var targetFile = File(fpath);
-                            var parent = targetFile.getParentFile();
-                            if (!parent.exists() && !parent.mkdirs()) {
-                                throw IllegalStateException("Couldn't create dir: " + parent);
-                                toast("Couldn't create dir for $fpath.")
-                            } else {
-                                var s = withContext(CommonPool) { Hashfunc.download(server, 443, secure, accesskey, secretkey, enckey, fpath, key, bucket, true) }
-                                if (s != "ERROR") {
-                                    textView.append("[D] => $fpath\n")
-                                    scrollToBottom()
-                                }
-                            }
+                val i = withContext(CommonPool) {
+                    Hashfunc.hashseed(server, accesskey, secretkey, enckey, snapshot_name, bucket, secure, w, nuke)
+                }
+                    if (i) {
+                        print("Successful")
+                        toast("Downloads successful!")
+                    } else {
+                        print("Failed")
+                        toast("Failed to download!")
+                    }
+
+                button2.setEnabled(true)
+                button3.setEnabled(true)
+                button4.setEnabled(true)
+                progressBar.visibility = View.INVISIBLE
+            }
+        } catch (e: Exception) {
+            print(e.toString())
+        }
+
+    }
+
+    fun Context.List(server: String, accesskey: String, secretkey: String, enckey: String, bucket: String, secure: Boolean, w: String) = async(UI) {
+        try {
+            launch(UI) {
+                var h = withContext(CommonPool) { Hashfunc.hashlist(server, secure, accesskey, secretkey, bucket) }
+                if (h != "ERROR") {
+                    var snapshots = h.lines()
+                    snapshots.forEach {
+                        var fpath = w + "/" + it
+                        if (!it.isBlank()) {
+                            categories.add(it)
                         }
                     }
-                    try {
-                        deleteFile(fileName)
-                    } catch (e: Exception) {
-                        toast("Error deleting snapshot image.")
-                    }
-                } else {
-                    toast("Error downloading snapshot!")
                 }
                 button2.setEnabled(true)
                 button3.setEnabled(true)
@@ -260,27 +271,7 @@ class MainActivity : AppCompatActivity() {
                 progressBar.visibility = View.INVISIBLE
             }
         } catch (e: Exception) {
-            print(e)
-        }
-
-    }
-
-    fun Context.List(server: String, accesskey: String, secretkey: String, enckey: String, bucket: String, secure: Boolean, w: String) = async(UI) {
-        launch(UI) {
-            var h = withContext(CommonPool) { Hashfunc.hashlist(server, secure, accesskey, secretkey, bucket) }
-            if (h != "ERROR") {
-                var snapshots = h.lines()
-                snapshots.forEach {
-                    var fpath = w + "/" + it
-                    if (!it.isBlank()) {
-                        categories.add(it)
-                    }
-                }
-            }
-            button2.setEnabled(true)
-            button3.setEnabled(true)
-            button4.setEnabled(true)
-            progressBar.visibility = View.INVISIBLE
+            print(e.toString())
         }
     }
 
@@ -320,23 +311,27 @@ class MainActivity : AppCompatActivity() {
             }
             return remotedb
         } catch (t: Throwable) {
-            textView.append(t.toString())
+            toast(t.toString())
         }
         return remotedb
     }
 
     fun Context.Upload(server: String, accesskey: String, secretkey: String, enckey: String, bucket: String, snapshot_name: String, fileName: String, secure: Boolean, w: String) = async(UI) {
-        launch(UI) {
-            val i = withContext(CommonPool) { Hashfunc.hashtree(server, accesskey, secretkey, enckey, bucket, secure, w) }
-            if (i) {
-                toast("Uploads successful!")
-            } else {
-                toast("Failed to upload!")
+        try {
+            launch(UI) {
+                val i = withContext(CommonPool) { Hashfunc.hashtree(server, accesskey, secretkey, enckey, bucket, secure, w) }
+                if (i) {
+                    toast("Uploads successful!")
+                } else {
+                    toast("Failed to upload!")
+                }
+                button2.setEnabled(true)
+                button3.setEnabled(true)
+                button4.setEnabled(true)
+                progressBar.visibility = View.INVISIBLE
             }
-            button2.setEnabled(true)
-            button3.setEnabled(true)
-            button4.setEnabled(true)
-            progressBar.visibility = View.INVISIBLE
+        } catch (e: Exception) {
+            print(e.toString())
         }
     }
 }

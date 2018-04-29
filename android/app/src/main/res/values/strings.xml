@@ -10,6 +10,9 @@
     <string name="pref_secure">Enable secure server connection</string>
     <string name="pref_secure_description">Use HTTPS to establish a connection instead of HTTP.
     </string>
+    <string name="pref_nuke">Overwrite local files</string>
+    <string name="pref_nuke_description">Specify weather local files should be automatically overwritten without prompting.
+    </string>
 
     <string name="pref_server">Remote Server</string>
     <string name="pref_server_default">sgp1.digitaloceanspaces.com</string>
