@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: artifacts:hashfunc">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/hashfunc.aar/4329b22a9b6f5e0d643a1c766754300d/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/hashfunc.aar/4329b22a9b6f5e0d643a1c766754300d/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/hashfunc.aar/3e35a0df8ec758664d3aa18247e06c8b/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/hashfunc.aar/3e35a0df8ec758664d3aa18247e06c8b/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

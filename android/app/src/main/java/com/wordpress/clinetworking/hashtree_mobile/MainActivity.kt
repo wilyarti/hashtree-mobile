@@ -18,7 +18,9 @@ import kotlinx.coroutines.experimental.async
 import android.support.v4.app.ActivityCompat
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AlertDialog
 import android.text.method.ScrollingMovementMethod
 import kotlinx.coroutines.experimental.joinChildren
 import kotlinx.coroutines.experimental.CommonPool
@@ -50,6 +52,7 @@ class MainActivity : AppCompatActivity() {
         spinner.adapter = dataAdapter
         //// end
 
+
         // scrollview
         val tview: TextView = findViewById(R.id.textView)
         val smm = ScrollingMovementMethod()
@@ -74,6 +77,7 @@ class MainActivity : AppCompatActivity() {
                 button2.setEnabled(false)
                 button3.setEnabled(false)
                 button4.setEnabled(false)
+                button5.setEnabled(false)
                 prog.visibility = View.VISIBLE
 
                 var server = PreferenceManager.getDefaultSharedPreferences(this).getString("text_server", "")
@@ -95,6 +99,7 @@ class MainActivity : AppCompatActivity() {
                 button2.setEnabled(false)
                 button3.setEnabled(false)
                 button4.setEnabled(false)
+                button5.setEnabled(false)
                 prog.visibility = View.VISIBLE
                 // make sure dest dir exists
                 val parent = File(w)
@@ -132,6 +137,7 @@ class MainActivity : AppCompatActivity() {
                     button2.setEnabled(false)
                     button3.setEnabled(false)
                     button4.setEnabled(false)
+                    button5.setEnabled(false)
                     prog.visibility = View.VISIBLE
 
                     // variables
@@ -150,6 +156,47 @@ class MainActivity : AppCompatActivity() {
                 toast("Need storage permission enabled!")
             }
 
+        }
+        button5.setOnClickListener {
+            // variables
+            var server = PreferenceManager.getDefaultSharedPreferences(this).getString("text_server", "")
+            var accesskey = PreferenceManager.getDefaultSharedPreferences(this).getString("text_accesskey", "")
+            var secretkey = PreferenceManager.getDefaultSharedPreferences(this).getString("text_secretkey", "")
+            var enckey = PreferenceManager.getDefaultSharedPreferences(this).getString("text_enckey", "")
+            var bucket = PreferenceManager.getDefaultSharedPreferences(this).getString("text_bucket", "")
+            var secure = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("example_switch", true)
+            var snapshot_name: String
+            snapshot_name = spinner.selectedItem.toString()
+            val fileName: String = w + "/" + snapshot_name
+
+            // Initialize a new instance of
+            val builder = AlertDialog.Builder(this@MainActivity)
+            root_layout.setBackgroundColor(Color.RED)
+
+            // Set the alert dialog title
+            builder.setTitle("WARNING PLEASE CONFIRM")
+
+            // Display a message on alert dialog
+            builder.setMessage("Initializing the repository is possibly a destructive action. " +
+                    "If you initialise an existing repository it will destroy the database and may result in orphaned/unrecoverable files.")
+
+            // Set a positive button and its click listener on alert dialog
+            builder.setPositiveButton("YES - Possible destroy data") { dialog, which ->
+                // Do something when user press the positive button
+                Toast.makeText(applicationContext, "Initializing bucket and repository....", Toast.LENGTH_SHORT).show();root_layout.setBackgroundColor(Color.WHITE);initRepo(server, accesskey, secretkey, enckey, bucket, secure, w)
+            }
+
+            // Display a negative button on alert dialog
+            builder.setNegativeButton("NO - Do nothing") { dialog, which ->
+                Toast.makeText(applicationContext, "Cancelled...", Toast.LENGTH_SHORT).show();root_layout.setBackgroundColor(Color.WHITE)
+            }
+
+
+            // Finally, make the alert dialog using builder
+            val dialog: AlertDialog = builder.create()
+
+            // Display the alert dialog on app interface
+            dialog.show()
         }
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -231,7 +278,7 @@ class MainActivity : AppCompatActivity() {
             launch(UI) {
                 val i = withContext(CommonPool) {
                     Hashfunc.hashseed(server, accesskey, secretkey, enckey, snapshot_name, bucket, secure, w, nuke)
-               }
+                }
                 if (i) {
                     toast("Downloads successful!")
                 } else {
@@ -240,12 +287,33 @@ class MainActivity : AppCompatActivity() {
                 button2.setEnabled(true)
                 button3.setEnabled(true)
                 button4.setEnabled(true)
+                button5.setEnabled(true)
                 progressBar.visibility = View.INVISIBLE
             }
         } catch (e: Exception) {
             print(e.toString())
         }
 
+    }
+
+    fun Context.initRepo(server: String, accesskey: String, secretkey: String, enckey: String, bucket: String, secure: Boolean, w: String) = async(UI) {
+        try {
+            launch(UI) {
+                var h = withContext(CommonPool) { Hashfunc.initrepo(server, secure, accesskey, secretkey, enckey, bucket, w) }
+                if (!h) {
+                    toast("Error creating repository.")
+                } else {
+                    toast("Successfully initialised...")
+                }
+                button2.setEnabled(true)
+                button3.setEnabled(true)
+                button4.setEnabled(true)
+                button5.setEnabled(true)
+                progressBar.visibility = View.INVISIBLE
+            }
+        } catch (e: Exception) {
+            print(e.toString())
+        }
     }
 
     fun Context.List(server: String, accesskey: String, secretkey: String, enckey: String, bucket: String, secure: Boolean, w: String) = async(UI) {
@@ -264,6 +332,7 @@ class MainActivity : AppCompatActivity() {
                 button2.setEnabled(true)
                 button3.setEnabled(true)
                 button4.setEnabled(true)
+                button5.setEnabled(true)
                 progressBar.visibility = View.INVISIBLE
             }
         } catch (e: Exception) {
@@ -324,6 +393,7 @@ class MainActivity : AppCompatActivity() {
                 button2.setEnabled(true)
                 button3.setEnabled(true)
                 button4.setEnabled(true)
+                button5.setEnabled(true)
                 progressBar.visibility = View.INVISIBLE
             }
         } catch (e: Exception) {
