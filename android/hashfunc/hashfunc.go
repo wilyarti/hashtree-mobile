@@ -766,34 +766,35 @@ func uploadfile(bucket string, url string, secure bool, accesskey string, secret
 				break
 			}
 
-			// minio-go example code modified:
-			object, err := os.Open(filepath)
-			if err != nil {
-				out := fmt.Sprintf("[F] %s => %s failed to upload: %s", hash, filepath, err)
-				fmt.Println(out)
-				jc.SendString(out)
-				results <- hash
-				break
-			}
-			defer object.Close()
-			objectStat, err := object.Stat()
-			if err != nil {
-				out := fmt.Sprintf("[F] %s => %s failed to upload: %s", hash, filepath, err)
-				fmt.Println(out)
-				jc.SendString(out)
-				results <- hash
-				break
-			}
-			password := []byte(enckey)
-			salt := []byte(path.Join(bucket, hash))
-
 			// Encrypt file content and upload to the server
 			// try multiple times
+			// we must loop over the file opening procedure otherwise the
+			// pipe will be empty and the upload will be empty.
 			b := path.Base(filepath)
-			for i := 0; i < 4; i++ {
+			for i := 0; i < 3; i++ {
+				// minio-go example code modified:
+				object, err := os.Open(filepath)
+				if err != nil {
+					out := fmt.Sprintf("[F] %s => %s failed to upload: %s", hash, filepath, err)
+					fmt.Println(out)
+					jc.SendString(out)
+					results <- hash
+					break
+				}
+				defer object.Close()
+				objectStat, err := object.Stat()
+				if err != nil {
+					out := fmt.Sprintf("[F] %s => %s failed to upload: %s", hash, filepath, err)
+					fmt.Println(out)
+					jc.SendString(out)
+					results <- hash
+					break
+				}
+				password := []byte(enckey)
+				salt := []byte(path.Join(bucket, hash))
 				start := time.Now()
-
 				pw := compressLZ4(object)
+
 				encrypted, err := sio.EncryptReader(pw, sio.Config{
 					// generate a 256 bit long key.
 					Key: argon2.IDKey(password, salt, 1, 64*1024, 4, 32),
@@ -801,7 +802,7 @@ func uploadfile(bucket string, url string, secure bool, accesskey string, secret
 				if err != nil {
 					out := fmt.Sprintf("[F] %s => %s failed to upload: %s", hash, filepath, err)
 					fmt.Println(out)
-
+					jc.SendString(out)
 					results <- hash
 					break
 				}
@@ -811,6 +812,9 @@ func uploadfile(bucket string, url string, secure bool, accesskey string, secret
 				if size == 0 && objectStat.Size() != 0 {
 					out := fmt.Sprintf("[F] %s => %s failed to upload: %s", hash, filepath, err)
 					fmt.Println(out)
+					jc.SendString(out)
+					results <- hash
+					break
 				}
 				elapsed := time.Since(start)
 				if err != nil {

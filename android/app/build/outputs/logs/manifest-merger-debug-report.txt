@@ -9,7 +9,7 @@ MERGED from [com.android.support.constraint:constraint-layout:1.1.0] /home/undef
 MERGED from [com.android.support:support-v4:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-v4-27.1.1.aar/964020bc647c3053ced71b0a4616fd75/AndroidManifest.xml:17:1-22:12
 MERGED from [com.android.support:animated-vector-drawable:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-27.1.1.aar/0796bf12f920dc795dda19d37d188b2c/AndroidManifest.xml:17:1-22:12
 MERGED from [com.android.support:support-vector-drawable:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-27.1.1.aar/1fcd5cd86a16acfffae70b7d9e222411/AndroidManifest.xml:17:1-22:12
-MERGED from [:hashfunc] /home/undef/.gradle/caches/transforms-1/files-1.1/hashfunc.aar/91ec02cbedd651abe50781707d7c4798/AndroidManifest.xml:1:1-2:50
+MERGED from [:hashfunc] /home/undef/.gradle/caches/transforms-1/files-1.1/hashfunc.aar/40a3394685fd2bd0bc8f71725f356ef3/AndroidManifest.xml:1:1-2:50
 MERGED from [com.android.support:support-fragment:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-fragment-27.1.1.aar/aab6a4b5d21e524c5f53d9193be8a552/AndroidManifest.xml:17:1-22:12
 MERGED from [com.android.support:support-core-ui:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-core-ui-27.1.1.aar/78aa1763ea9bd5443057c9dd9d81e983/AndroidManifest.xml:17:1-22:12
 MERGED from [com.android.support:support-core-utils:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-core-utils-27.1.1.aar/193788e574415bb80bde43e1f077d4f4/AndroidManifest.xml:17:1-22:12
@@ -98,8 +98,8 @@ MERGED from [com.android.support:animated-vector-drawable:27.1.1] /home/undef/.g
 MERGED from [com.android.support:animated-vector-drawable:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-27.1.1.aar/0796bf12f920dc795dda19d37d188b2c/AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:support-vector-drawable:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-27.1.1.aar/1fcd5cd86a16acfffae70b7d9e222411/AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:support-vector-drawable:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-27.1.1.aar/1fcd5cd86a16acfffae70b7d9e222411/AndroidManifest.xml:20:5-44
-MERGED from [:hashfunc] /home/undef/.gradle/caches/transforms-1/files-1.1/hashfunc.aar/91ec02cbedd651abe50781707d7c4798/AndroidManifest.xml:2:1-39
-MERGED from [:hashfunc] /home/undef/.gradle/caches/transforms-1/files-1.1/hashfunc.aar/91ec02cbedd651abe50781707d7c4798/AndroidManifest.xml:2:1-39
+MERGED from [:hashfunc] /home/undef/.gradle/caches/transforms-1/files-1.1/hashfunc.aar/40a3394685fd2bd0bc8f71725f356ef3/AndroidManifest.xml:2:1-39
+MERGED from [:hashfunc] /home/undef/.gradle/caches/transforms-1/files-1.1/hashfunc.aar/40a3394685fd2bd0bc8f71725f356ef3/AndroidManifest.xml:2:1-39
 MERGED from [com.android.support:support-fragment:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-fragment-27.1.1.aar/aab6a4b5d21e524c5f53d9193be8a552/AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:support-fragment:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-fragment-27.1.1.aar/aab6a4b5d21e524c5f53d9193be8a552/AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:support-core-ui:27.1.1] /home/undef/.gradle/caches/transforms-1/files-1.1/support-core-ui-27.1.1.aar/78aa1763ea9bd5443057c9dd9d81e983/AndroidManifest.xml:20:5-44
