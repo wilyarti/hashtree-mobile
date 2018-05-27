@@ -314,7 +314,7 @@ func Hashtree(server string, accesskey string, secretkey string, enckey string, 
 
 	// scan files and return map filepath = hash
 	files = hashfiles.Scan(dir)
-	jc.SendString(fmt.Sprint("Files scanned: ", len(dir)))
+	jc.SendString(fmt.Sprint("Files scanned: ", len(files)))
 
 	// download .db from server this contains the hashed
 	// of all already uploaded files
@@ -830,7 +830,7 @@ func uploadfile(bucket string, url string, secure bool, accesskey string, secret
 					results <- hash
 					break
 				}
-				elapsed := time.Since(start)
+				elapsed := time.Since(start).Seconds()
 				if err != nil {
 					if i == 2 {
 						out := fmt.Sprintf("[F] %s => %s failed to upload: %s", hash, filepath, err)
