@@ -87,7 +87,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginTop="80dp"
         android:fillViewport="true"
-        android:scrollbars="vertical"
+        android:scrollbars="vertical|horizontal"
         app:layout_constraintBottom_toTopOf="@+id/button3"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -97,8 +97,10 @@
             android:layout_height="fill_parent"
             android:layout_weight="1.0"
             android:gravity="bottom"
-            android:scrollbars="vertical|horizontal"
-            android:textSize="12sp" />
+            android:scrollbars="horizontal|vertical"
+            android:textSize="12sp"
+            android:typeface="monospace"
+            app:fontFamily="monospace" />
     </ScrollView>
 
     <ProgressBar

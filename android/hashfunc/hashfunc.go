@@ -579,7 +579,7 @@ func downloadfile(bucket string, url string, secure bool, accesskey string, secr
 				checksum := hex.EncodeToString(digest[:])
 				if hash == checksum {
 					b := path.Base(fpath)
-					out := fmt.Sprintf("[V]  %s => %s", hash[:8], b)
+					out := fmt.Sprintf("[V]\t%s => %s", hash[:8], b)
 					fmt.Println(out)
 					jc.SendString(out)
 					results <- ""
@@ -587,21 +587,12 @@ func downloadfile(bucket string, url string, secure bool, accesskey string, secr
 				} else if (hash != checksum) && (nuke == false) {
 					out := fmt.Sprintf("[!] %s => %s local file differs from remote version!", hash, fpath)
 					fmt.Println(out)
+					jc.SendString(out)
 					results <- hash
 					break
 
 				}
 			}
-			s3Client, err := minio.New(url, accesskey, secretkey, secure)
-			// break unrecoverable errors
-			if err != nil {
-				out := fmt.Sprintf("[!] %s => %s failed to download: %s", hash, fpath, err)
-				fmt.Println(out)
-				jc.SendString(out)
-				results <- hash
-				break
-			}
-			////
 			// create directorys for files:
 			// create file path:
 			b := path.Base(fpath)
@@ -611,25 +602,51 @@ func downloadfile(bucket string, url string, secure bool, accesskey string, secr
 			// minio-go download object code:
 			// Encrypt file content and upload to the server
 			// try multiple times
-			for i := 0; i < 4; i++ {
+			for i := 0; i < 3; i++ {
+				s3Client, err := minio.New(url, accesskey, secretkey, secure)
+				// break unrecoverable errors
+				if err != nil {
+					out := fmt.Sprintf("[!] %s => %s failed to download: %s", hash, fpath, err)
+					fmt.Println(out)
+					jc.SendString(out)
+					results <- hash
+					break
+				}
 				start := time.Now()
 				obj, err := s3Client.GetObject(bucket, hash, minio.GetObjectOptions{})
 				if err != nil {
-					if i == 3 {
-						out := fmt.Sprintf("[!] %s => %s failed to download: %s", hash, fpath, err)
-						fmt.Println(out)
-						jc.SendString(out)
+					out := fmt.Sprintf("[!] %s => %s failed to download: %s", hash, fpath, err)
+					fmt.Println(out)
+					jc.SendString(out)
+					if i == 2 {
 						results <- hash
 						break
 					}
+					continue
 				}
+				// size not used. we don't know the decrypted and decompressed
+				// size so just ignore it. errors will be caught by the hash
+				// check.
+				/*size, err := decryptedSize(objSt.Size)
 
+				objSt, err := obj.Stat()
+				if err != nil {
+					out := fmt.Sprintf("[!] %s => %s failed to download: %s", hash, fpath, err)
+					fmt.Println(out)
+					results <- hash
+					break
+				}
+				if err != nil {
+					out := fmt.Sprintf("[!] %s => %s failed to download: %s", hash, fpath, err)
+					fmt.Println(out)
+					results <- hash
+					break
+				}*/
 				localFile, err := os.Create(fpath)
 				if err != nil {
 					out := fmt.Sprintf("[!] %s => %s Error creating file.", hash, fpath)
 					fmt.Println(out)
 					jc.SendString(out)
-
 					results <- hash
 					break
 				}
@@ -642,24 +659,28 @@ func downloadfile(bucket string, url string, secure bool, accesskey string, secr
 					Key: argon2.IDKey(password, salt, 1, 64*1024, 4, 32),
 				})
 				if err != nil {
-					out := fmt.Sprintf("[!] %s => %s failed to download: %s", hash, fpath, err)
+					out := fmt.Sprintf("[!] %s => %s failed to decrpyt file: %s", hash, fpath, err)
 					fmt.Println(out)
 					jc.SendString(out)
-
-					results <- hash
-					break
+					if i == 2 {
+						results <- hash
+						break
+					}
+					continue
 				}
 				pr := decompressLZ4(decrypted)
 				dsize, err := io.Copy(localFile, pr)
 				if err != nil {
-					out := fmt.Sprintf("[!] %s => %s failed to download: %s", hash, fpath, err)
+					out := fmt.Sprintf("[!] %s => %s failed to decompress file: %s", hash, fpath, err)
 					fmt.Println(out)
 					jc.SendString(out)
-
-					results <- hash
-					break
+					if i == 2 {
+						results <- hash
+						break
+					}
+					continue
 				}
-				elapsed := time.Since(start)
+				elapsed := time.Since(start).Seconds()
 				var s uint64 = uint64(dsize)
 				if len(hash) == 64 {
 					data, err := ioutil.ReadFile(fpath)
@@ -667,7 +688,6 @@ func downloadfile(bucket string, url string, secure bool, accesskey string, secr
 						out := fmt.Sprintf("[!] %s => %s failed to download: %s", hash, fpath, err)
 						fmt.Println(out)
 						jc.SendString(out)
-
 						results <- hash
 						break
 					}
@@ -678,24 +698,20 @@ func downloadfile(bucket string, url string, secure bool, accesskey string, secr
 						out := fmt.Sprintf("[!] %s => %s checksum mismatch!", hash, fpath)
 						fmt.Println(out)
 						jc.SendString(out)
-
 						results <- hash
 						break
 
 					}
-					out := fmt.Sprintf("(%s)(%s) %s => %s\n", elapsed, humanize.Bytes(s), hash[:8], b)
-
+					out := fmt.Sprintf("[D][V]\t(%.2fs)\t(%s)    \t%s => %s", elapsed, humanize.Bytes(s), hash[:8], b)
 					fmt.Println(out)
 					jc.SendString(out)
-
 					results <- ""
 					break
 
 				} else {
-					out := fmt.Sprintf("(%s)(%s) %s => %s\n", elapsed, humanize.Bytes(s), hash, b)
+					out := fmt.Sprintf("[D][%d]\t(%.2fs)\t(%s)    \t%s => %s", i, elapsed, humanize.Bytes(s), hash, b)
 					fmt.Println(out)
 					jc.SendString(out)
-
 					results <- ""
 					break
 				}
@@ -765,11 +781,6 @@ func uploadfile(bucket string, url string, secure bool, accesskey string, secret
 				results <- hash
 				break
 			}
-
-			// Encrypt file content and upload to the server
-			// try multiple times
-			// we must loop over the file opening procedure otherwise the
-			// pipe will be empty and the upload will be empty.
 			b := path.Base(filepath)
 			for i := 0; i < 3; i++ {
 				// minio-go example code modified:
@@ -792,9 +803,12 @@ func uploadfile(bucket string, url string, secure bool, accesskey string, secret
 				}
 				password := []byte(enckey)
 				salt := []byte(path.Join(bucket, hash))
-				start := time.Now()
-				pw := compressLZ4(object)
 
+				// Encrypt file content and upload to the server
+				// try multiple times
+				start := time.Now()
+
+				pw := compressLZ4(object)
 				encrypted, err := sio.EncryptReader(pw, sio.Config{
 					// generate a 256 bit long key.
 					Key: argon2.IDKey(password, salt, 1, 64*1024, 4, 32),
@@ -818,7 +832,7 @@ func uploadfile(bucket string, url string, secure bool, accesskey string, secret
 				}
 				elapsed := time.Since(start)
 				if err != nil {
-					if i == 3 {
+					if i == 2 {
 						out := fmt.Sprintf("[F] %s => %s failed to upload: %s", hash, filepath, err)
 						fmt.Println(out)
 						jc.SendString(out)
@@ -828,14 +842,13 @@ func uploadfile(bucket string, url string, secure bool, accesskey string, secret
 				} else {
 					var s uint64 = uint64(size)
 					if len(hash) == 64 {
-						out := fmt.Sprintf("(%s)(%s) %s => %s\n", elapsed, humanize.Bytes(s), hash[:8], b)
-						fmt.Print(out)
-						jc.SendString(out)
+						fmt.Printf("[U][%d]\t(%.2fs)\t(%s)    \t%s => %s\n", i, elapsed, humanize.Bytes(s), hash[:8], b)
+						jc.SendString(fmt.Sprintf("[U][%d]\t(%.2fs)\t(%s)    \t%s => %s\n", i, elapsed, humanize.Bytes(s), hash[:8], b))
 
 					} else {
-						out := fmt.Sprintf("(%s)(%s) %s => %s\n", elapsed, humanize.Bytes(s), hash, b)
-						fmt.Print(out)
-						jc.SendString(out)
+						fmt.Printf("[U][%d]\t(%.2fs)\t(%s)    \t%s => %s\n", i, elapsed, humanize.Bytes(s), hash, b)
+						jc.SendString(fmt.Sprintf("[U][%d]\t(%.2fs)\t(%s)    \t%s => %s\n", i, elapsed, humanize.Bytes(s), hash, b))
+
 					}
 					results <- ""
 					break
